@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import random
-from pprint import pprint
 
 
 class Graph(object):
@@ -41,11 +40,17 @@ class Graph(object):
     def get_random_vertex(self):
         return random.choice(list(self.vertices.keys()))
 
+    def get_vertex_predecessors(self, vertex):
+        return {i for i in self.vertices if vertex in self.vertices[i]}
+
     def get_adjacent_vertices(self, vertex):
-        return set(self.vertices[vertex])
+        return set(self.vertices[vertex])  # also sucessors
+
+    def get_vertex_indegree(self, vertex):
+        return len([i for i in self.vertices if vertex in self.vertices[i]])
 
     def get_vertex_degree(self, vertex):
-        return len(self.get_adjacent_vertices(vertex))
+        return len(self.get_adjacent_vertices(vertex))  # also outdegree
 
     def graph_regularity(self):
         rand_degree = self.get_vertex_degree(self.get_random_vertex())
@@ -72,34 +77,19 @@ class Graph(object):
         return (set(self.vertices.keys()) ==
                 self.transitive_closure(self.get_random_vertex()))
 
-    # def check_cycles(self, vertex, visited=set()):
-    #     for v in self.get_adjacent_vertices(vertex):
-    #         if vertex in visited:
-    #             return False
-    #         visited.add(vertex)
-    #         self.check_cycles(v, visited)
-    #     return self.graph_connectivity()
-
     def is_tree(self):
-        def check_cycles(v, visited=set()):
-            for adj in self.get_adjacent_vertices(v):
-                if adj in visited:
-                    return False
-                visited.add(v)
-                check_cycles(adj, visited)
-            return True
+        def check_cycles(v, act_v, before_v, visited=set()):
+            if act_v in visited:
+                return True
+            visited.add(act_v)
 
-        return not (self.graph_connectivity() and not
-                    check_cycles(self.get_random_vertex()))
+            for adj in self.get_adjacent_vertices(act_v):
+                if adj != before_v:
+                    if check_cycles(v, adj, act_v, visited):
+                        return True
 
-g = Graph()
-# g.vertices['a'] = set('bc')
-# g.vertices['b'] = set()
-# g.vertices['c'] = set('e')
-# g.vertices['d'] = set('ef')
-g.vertices['e'] = set('fg')
-g.vertices['f'] = set()
-g.vertices['g'] = set()
-pprint(g.vertices)
+            visited - {act_v}
+            return False
 
-print(g.is_tree())
+        v = self.get_random_vertex()
+        return self.graph_connectivity() and not check_cycles(v, v, v)
