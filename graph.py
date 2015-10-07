@@ -17,12 +17,12 @@ class Graph(object):
 
     def add_vertex(self, vertex):
         """Adds a vertex to the graph."""
-        if vertex not in self.vertices.keys():
+        if vertex not in self.vertices:
             self.vertices[vertex] = set()
 
     def remove_vertex(self, vertex):
         """Removes a vertex and every one of its edges from the graph."""
-        if vertex in self.vertices.keys():
+        if vertex in self.vertices:
             for v in self.vertices:
                 if vertex in self.vertices[v]:
                     self.vertices[v].remove(vertex)
@@ -30,14 +30,14 @@ class Graph(object):
 
     def connect_two_vertices(self, vert1, vert2):
         """Creates an edge between two vertices."""
-        if vert1 and vert2 in self.vertices.keys():
+        if vert1 in self.vertices and vert2 in self.vertices:
             self.vertices[vert1].update(vert2)
             if not self.directed:
                 self.vertices[vert2].update(vert1)
 
     def disconnect_two_vertices(self, vert1, vert2):
         """Removes an edge between two vertices."""
-        if vert1 and vert2 in self.vertices.keys():
+        if vert1 in self.vertices and vert2 in self.vertices:
             self.vertices[vert1].remove(vert2)
             if not self.directed:
                 self.vertices[vert2].remove(vert1)
