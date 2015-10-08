@@ -59,20 +59,31 @@ class Graph(object):
         then these are called predecessors of that vertex."""
         return {i for i in self.vertices if vertex in self.vertices[i]}
 
+    def get_vertex_sucessors(self, vertex):
+        """In directed graphs, the successors of a vertex are other vertices
+        that can be reached from it."""
+        return self.vertices[vertex]
+
     def get_adjacent_vertices(self, vertex):
-        """Two vertices are adjacent if they share a common edge. In undirected
-        graphs, the edges must point the same way (in this case, outwards),
-        giving the definition of successors of a vertex."""
-        return set(self.vertices[vertex])
+        """Counts all vertices that are connected to a given vertex."""
+        if self.directed:
+            return (self.get_vertex_sucessors(vertex) |
+                    self.get_vertex_predecessors(vertex))
+        return self.vertices[vertex]
 
     def get_vertex_indegree(self, vertex):
-        """The indegree of a vertex in a directed graph is the number of
+        """In directed graphs, the indegree of a vertex is the number of
         vertices with edges that point to that vertex."""
-        return len([i for i in self.vertices if vertex in self.vertices[i]])
+        return len(self.get_vertex_predecessors(vertex))
+
+    def get_vertex_outdegree(self, vertex):
+        """In directed graphs, the outdegree of a vertex is the number of
+        vertices that are reached from it."""
+        return len(self.get_vertex_sucessors(vertex))
 
     def get_vertex_degree(self, vertex):
-        """The degree of a vertex is the number of vertices it reaches through
-        undirected edges. In directed graphs, it is called the outdegree."""
+        """The degree of a vertex is the number of vertices it is connected
+        to."""
         return len(self.get_adjacent_vertices(vertex))
 
     def graph_regularity(self):
@@ -86,7 +97,7 @@ class Graph(object):
     def graph_completeness(self):
         """A graph is complete if all pairs of vertices are connected through
         one unique edge (or two directed ones in the case of directed graphs).
-        It is also called a k-n graph (where n is the order of the graph)."""
+        It is also called a k_n graph, where n is the order of the graph."""
         max_degree = self.graph_order() - 1
         for v in self.vertices:
             if max_degree != self.get_vertex_degree(v):
@@ -112,8 +123,9 @@ class Graph(object):
         minimum number of edges possible (the order of the graph minus one)."""
 
         def check_cycles(v, act_v, before_v, visited=set()):
-            """A depth-first search algorithm implementation to check for
-            cycles in a graph."""
+            """A depth-first search algorithm (path searching in graphs where
+            each branch is searched until its last child before backtracking)
+            implementation to check for cycles in a graph."""
             if act_v in visited:
                 return True
 
