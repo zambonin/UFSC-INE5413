@@ -1,0 +1,94 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper, left=20mm, right=20mm, top=20mm, bottom=20mm]{geometry}
+\usepackage[colorlinks=true, urlcolor=blue]{hyperref}
+
+\begin{document}
+
+\subsubsection*{INE5413 - Grafos (2015/2) \\
+    Gustavo Zambonin \\
+    Trabalho I - Implementação
+}
+
+A estrutura utilizada para a implementação de um grafo assemelha-se a um mapa.
+Utiliza como chave um vértice e como valor um conjunto de outros vértices aos
+quais este se conecta. Na linguagem escolhida, Python, estas estruturas são
+chamadas de \texttt{dict} e \texttt{set}. A fonte utilizada para verificar a
+complexidade de recursos da linguagem pode ser acessada
+\href{https://wiki.python.org/moin/TimeComplexity}{aqui}.
+
+\begin{itemize}
+    \item \texttt{add\_vertex} \\
+    Um mapa adiciona chaves em tempo constante. \textbf{O(1)}
+
+    \item \texttt{remove\_vertex} \\
+    A remoção de um vértice sem conexões acontece em O(1). Caso existam arestas
+    conectadas a ele, então é necessário iterar sobre todos os vértices
+    existentes e verificar se o vértice está presente no conjunto de conexões.
+    A iteração leva tempo linear, e a operação de presença tem caso médio O(1).
+    \textbf{O(n)}
+
+    \item \texttt{connect\_two\_vertices} \\
+    Mapear valores para chaves leva tempo constante. \textbf{O(1)}
+
+    \item \texttt{disconnect\_two\_vertices} \\
+    Remover valores de chaves leva tempo constante. \textbf{O(1)}
+
+    \item \texttt{graph\_order} \\
+    A operação de tamanho de lista leva tempo constante. \textbf{O(1)}
+
+    \item \texttt{get\_vertices} \\
+    A iteração sobre as chaves de um mapa leva tempo linear. \textbf{O(n)}
+
+    \item \texttt{get\_random\_vertex} \\
+    A complexidade temporal para gerar um número aleatório no módulo
+    \texttt{random} em Python consegue ser
+    \href{https://docs.python.org/2/library/random.html}{constante}. O método
+    chamado na implementação presente, \texttt{choice()}, pode ser consultado
+    \href{https://hg.python.org/cpython/file/2.7/Lib/random.py#l273}{aqui}.
+    \textbf{O(1)}
+
+    \item \texttt{get\_vertex\_predecessors} \\
+    Checar se um vértice está presente em $n$ conjuntos leva tempo linear.
+    \textbf{O(n)}
+
+    \item \texttt{get\_vertex\_sucessors} \\
+    Acessar o valor de uma chave leva tempo constante. \textbf{O(1)}
+
+    \item \texttt{get\_adjacent\_vertices} \\
+    Caso o grafo seja direcionado, unir dois conjuntos leva tempo linear. Do
+    contrário, acessar o valor de uma chave leva tempo constante. \textbf{O(n)}
+    ou \textbf{O(1)}
+
+    \item \texttt{get\_vertex\_indegree} \\
+    Tamanho do retorno de \texttt{get\_vertex\_precedessors}. \textbf{O(n)}
+
+    \item \texttt{get\_vertex\_outdegree} \\
+    Tamanho do retorno de \texttt{get\_vertex\_sucessors}. \textbf{O(1)}
+
+    \item \texttt{get\_vertex\_degree} \\
+    Tamanho do retorno de \texttt{get\_adjacent\_vertices}. \textbf{O(n)} ou
+    \textbf{O(1)}
+
+    \item \texttt{graph\_regularity} \\
+    Pode ser necessário iterar sobre todos os vértices. \textbf{O(n)}
+
+    \item \texttt{graph\_completeness} \\
+    Novamente, pode-se mostrar necessário iterar sobre a lista inteira de
+    vértices. \textbf{O(n)}
+
+    \item \texttt{transitive\_closure} \\
+    É necessário calcular e iterar sobre os vértices adjacentes de todos os
+    vértices do grafo. $\mathbf{O(n^2)}$
+
+    \item \texttt{graph\_connectivity} \\
+    Utiliza o retorno de \texttt{transitive\_closure}. $\mathbf{O(n^2)}$
+
+    \item \texttt{is\_tree} \\
+    O método interno \texttt{check\_cycles} calcula os vértices adjacentes de
+    todos os vértices do grafo, e o retorno chama \texttt{graph\_connectivity}.
+    $\mathbf{O(n^2)}$
+\end{itemize}
+
+\end{document}
