@@ -79,11 +79,11 @@ complexidade de recursos da linguagem pode ser acessada
     vértices. \textbf{O(n)}
 
     \item \texttt{transitive\_closure} \\
-    É necessário calcular e iterar sobre os vértices adjacentes de todos os
-    vértices do grafo. $\mathbf{O(n^2)}$
+    O número de testes será proporcional ao somatório dos graus de saída
+    de cada vértice, ou seja, o número de arestas do grafo. \textbf{O(m)}
 
     \item \texttt{graph\_connectivity} \\
-    Utiliza o retorno de \texttt{transitive\_closure}. $\mathbf{O(n^2)}$
+    Utiliza o retorno de \texttt{transitive\_closure}. \textbf{O(m)}
 
     \item \texttt{is\_tree} \\
     O método interno \texttt{check\_cycles} calcula os vértices adjacentes de

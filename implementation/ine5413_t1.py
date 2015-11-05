@@ -89,20 +89,16 @@ class Graph(object):
     def graph_regularity(self):
         """A graph is regular iff all of its vertices have the same degree."""
         rand_degree = self.get_vertex_degree(self.get_random_vertex())
-        for v in self.vertices:
-            if rand_degree != self.get_vertex_degree(v):
-                return False
-        return True
+        return all(rand_degree == self.get_vertex_degree(v)
+                   for v in self.vertices)
 
     def graph_completeness(self):
         """A graph is complete if all pairs of vertices are connected through
         one unique edge (or two directed ones in the case of directed graphs).
         It is also called a k_n graph, where n is the order of the graph."""
         max_degree = self.graph_order() - 1
-        for v in self.vertices:
-            if max_degree != self.get_vertex_degree(v):
-                return False
-        return True
+        return all(max_degree == self.get_vertex_degree(v)
+                   for v in self.vertices) and self.graph_connectivity()
 
     def transitive_closure(self, vertex, visited=set()):
         """A transitive closure represents the set of all the vertices
@@ -133,7 +129,6 @@ class Graph(object):
             for adj in self.get_adjacent_vertices(act_v):
                 if adj != before_v and check_cycles(v, adj, act_v, visited):
                         return True
-
             return False
 
         v = self.get_random_vertex()
