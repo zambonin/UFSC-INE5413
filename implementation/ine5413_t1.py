@@ -5,11 +5,11 @@ import random
 
 
 class Graph(object):
-    """A graph is a representation of a set of objects where some pairs of
-    these are connected by links. The objects are called vertices, and the
-    links are called edges.
     """
-
+    A graph is a representation of a set of objects where some pairs of these
+    are connected by links. The objects are called vertices, and the links are
+    called edges.
+    """
     def __init__(self, vertices={}, directed=False):
         """Initializes a graph object."""
         self.vertices = vertices
@@ -55,13 +55,17 @@ class Graph(object):
         return random.choice(list(self.vertices.keys()))
 
     def get_vertex_predecessors(self, vertex):
-        """In directed graphs, if a vertex is reachable from other vertices,
-        then these are called predecessors of that vertex."""
+        """
+        In directed graphs, if a vertex is reachable from other vertices, then
+        these are called predecessors of that vertex.
+        """
         return {i for i in self.vertices if vertex in self.vertices[i]}
 
     def get_vertex_sucessors(self, vertex):
-        """In directed graphs, the successors of a vertex are other vertices
-        that can be reached from it."""
+        """
+        In directed graphs, the successors of a vertex are other vertices that
+        can be reached from it.
+        """
         return self.vertices[vertex]
 
     def get_adjacent_vertices(self, vertex):
@@ -72,18 +76,23 @@ class Graph(object):
         return self.vertices[vertex]
 
     def get_vertex_indegree(self, vertex):
-        """In directed graphs, the indegree of a vertex is the number of
-        vertices with edges that point to that vertex."""
+        """
+        In directed graphs, the indegree of a vertex is the number of
+        vertices with edges that point to that vertex.
+        """
         return len(self.get_vertex_predecessors(vertex))
 
     def get_vertex_outdegree(self, vertex):
-        """In directed graphs, the outdegree of a vertex is the number of
-        vertices that are reached from it."""
+        """
+        In directed graphs, the outdegree of a vertex is the number of vertices
+        that are reached from it.
+        """
         return len(self.get_vertex_sucessors(vertex))
 
     def get_vertex_degree(self, vertex):
-        """The degree of a vertex is the number of vertices it is connected
-        to."""
+        """
+        The degree of a vertex is the number of vertices it is connected to.
+        """
         return len(self.get_adjacent_vertices(vertex))
 
     def graph_regularity(self):
@@ -93,16 +102,20 @@ class Graph(object):
                    for v in self.vertices)
 
     def graph_completeness(self):
-        """A graph is complete if all pairs of vertices are connected through
+        """
+        A graph is complete if all pairs of vertices are connected through
         one unique edge (or two directed ones in the case of directed graphs).
-        It is also called a k_n graph, where n is the order of the graph."""
+        It is also called a k_n graph, where n is the order of the graph.
+        """
         max_degree = self.graph_order() - 1
         return all(max_degree == self.get_vertex_degree(v)
                    for v in self.vertices) and self.graph_connectivity()
 
     def transitive_closure(self, vertex, visited=set()):
-        """A transitive closure represents the set of all the vertices
-        reachable directly or indirectly from a given vertex."""
+        """
+        A transitive closure represents the set of all the vertices reachable
+        directly or indirectly from a given vertex.
+        """
         visited.add(vertex)
         for v in self.get_adjacent_vertices(vertex):
             if v not in visited:
@@ -115,16 +128,18 @@ class Graph(object):
                 self.transitive_closure(self.get_random_vertex()))
 
     def is_tree(self):
-        """A graph is a tree iff all the vertices are reachable through the
-        minimum number of edges possible (the order of the graph minus one)."""
-
+        """
+        A graph is a tree iff all the vertices are reachable through the
+        minimum number of edges possible (the order of the graph minus one).
+        """
         def check_cycles(v, act_v, before_v, visited=set()):
-            """A depth-first search algorithm (path searching in graphs where
-            each branch is searched until its last child before backtracking)
-            implementation to check for cycles in a graph."""
+            """
+            A depth-first search algorithm (path searching in graphs where each
+            branch is searched until its last child before backtracking)
+            implementation to check for cycles in an undirected graph.
+            """
             if act_v in visited:
                 return True
-
             visited.add(act_v)
             for adj in self.get_adjacent_vertices(act_v):
                 if adj != before_v and check_cycles(v, adj, act_v, visited):
