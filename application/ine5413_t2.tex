@@ -64,16 +64,16 @@ INE5413 - Grafos}
     \begin{columns}[T]
         \begin{column}{.55\textwidth}
             \begin{itemize}
-                \item Assume-se um `navegador' de páginas, que clicará em
-                links aleatoriamente, até que isto seja impossível
                 \item Possível representar relações entre páginas como um
                 grafo direcionado
-                \item Seja um grafo G(V, A), então:
+                \item Seja um grafo $G(V, A)$, então:
                 \begin{center}
-                    V = $\{$p $\mid$ p é uma página da web$\}$ \\
-                    A = $\{$($r_1, r_2$) $|$ $r_2$ referencia
-                        $r_1$ por um \textit{hyperlink}$\}$
+                    $V = \{p \mid p$ é uma página da web$\}$ \\
+                    $A = \{(r_1, r_2) \mid r_1, r_2 \in V$ e $r_2$
+                    referencia $r_1$ por um \textit{hyperlink}$\}$
                 \end{center}
+                \item Assume-se um `navegador' de páginas, que clicará em
+                links aleatoriamente, até que isto seja impossível
             \end{itemize}
         \end{column}
         \begin{column}{.4\textwidth}
@@ -103,9 +103,14 @@ INE5413 - Grafos}
                 \sfrac{1}{3} & 0 & 0 & 0 \\
                 \sfrac{1}{3} & \sfrac{1}{2} & 0 & \sfrac{1}{2} \\
                 \sfrac{1}{3} & \sfrac{1}{2} & 0 & 0
-            \end{bmatrix} \stackrel{\text{Av = $\lambda$v}}{\approx}
-            1 \times \begin{bmatrix}
-                0.7210 \\ 0.2403 \\ 0.5408 \\ 0.3605
+            \end{bmatrix} \ \
+            \xrightarrow{Av = \lambda v} \ \
+            1 \cdot
+            \begin{bmatrix}
+                0.7210 \\
+                0.2403 \\
+                0.5408 \\
+                0.3605 \\
             \end{bmatrix}
         \end{equation*}
         \item O autovetor denota a probabilidade das páginas serem visitadas
@@ -115,8 +120,8 @@ INE5413 - Grafos}
 \begin{frame}
     \frametitle{Problemas}
     \begin{itemize}
-        \item Se $k = 0$ para uma página qualquer, então a página não terá
-        importância alguma, no modelo acima
+        \item Se $k = 0$ para uma página qualquer,
+        então a página não afetaria outras, no modelo acima
         \begin{figure}
             \includegraphics[scale=0.35]{pr_2}
             \caption{\tiny{A página `4', um sumidouro, deve possibilitar a
