@@ -1,0 +1,5 @@
+Presentation about Google's PageRank, a very known graph theory practical
+application. It classifies a web pageaccording to the number of links
+that point to it, and ranks it accordingly.
+
+Original assignment: a97a27a15ed971652d649af23ced25713e3d6c39

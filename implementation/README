@@ -1,0 +1,5 @@
+A simple di-graph implementation in Python that contains a depth-first search
+algorithm, used to check if a graph is a tree. A document consisting of time
+complexities of all the methods is also included.
+
+Original assignment: 6e473558a8e3a312b4c83a8dfd38819dd9249086

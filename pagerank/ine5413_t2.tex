@@ -1,22 +1,25 @@
 \documentclass{beamer}
 
+\usepackage[brazil]{babel}
+\usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage{lmodern}
-\usepackage{xfrac}
+\usepackage{lmodern, xfrac}
 
 \usetheme{CambridgeUS}
 \usecolortheme{seagull}
 \setbeamertemplate{headline}{}
+\setbeamertemplate{itemize items}[triangle]
 \setbeamertemplate{caption}{\raggedright\insertcaption\par}
-\beamertemplatenavigationsymbolsempty
+\setbeamertemplate{footline}[frame number]{}
+\setbeamertemplate{navigation symbols}{}
 
 \title{PageRank}
-\author[A. L. R. Teixeira, G. Zambonin]
-{Antonio Luiz Rosa Teixeira\texorpdfstring{\\ Gustavo Zambonin}{}}
-\institute[]{\newline
-Universidade Federal de Santa Catarina \\
-Departamento de Informática e Estatística \\
-INE5413 - Grafos}
+\author{Antonio Luiz Rosa Teixeira \and Gustavo Zambonin}
+\institute[]{
+    Universidade Federal de Santa Catarina \\
+    Departamento de Informática e Estatística \\
+    INE5413 - Grafos
+}
 \date{}
 
 \begin{document}
@@ -48,14 +51,14 @@ INE5413 - Grafos}
     \frametitle{Motivação}
     \begin{itemize}
         \item Motores de busca prévios utilizavam
-        heurísticas facilmente manipuláveis
+            heurísticas facilmente manipuláveis
         \begin{itemize}
             \item Tamanho do URL
             \item Conteúdo bruto da página
             \item Título da página
         \end{itemize}
         \item Método mais eficiente de relevar páginas de
-        acordo com as palavras-chave da pesquisa
+            acordo com as palavras-chave da pesquisa
         \item Evitar meios artificiais de inflação de popularidade
     \end{itemize}
 \end{frame}
@@ -66,7 +69,7 @@ INE5413 - Grafos}
         \begin{column}{.55\textwidth}
             \begin{itemize}
                 \item Possível representar relações entre páginas como um
-                grafo direcionado
+                    grafo direcionado
                 \item Seja um grafo $G(V, A)$, então:
                 \begin{center}
                     $V = \{p \mid p$ é uma página da web$\}$ \\
@@ -74,14 +77,14 @@ INE5413 - Grafos}
                     referencia $r_1$ por um \textit{hyperlink}$\}$
                 \end{center}
                 \item Assume-se um `navegador' de páginas, que clicará em
-                links aleatoriamente, até que isto seja impossível
+                    links aleatoriamente, até que isto seja impossível
             \end{itemize}
         \end{column}
         \begin{column}{.4\textwidth}
         \begin{figure}
             \includegraphics[scale=0.45]{pr_1}
             \caption{\tiny{Supondo uma rede com apenas quatro páginas e
-            referências entre estas, tem-se o grafo acima.}}
+                referências entre estas, tem-se o grafo acima.}}
         \end{figure}
         \end{column}
     \end{columns}
@@ -91,7 +94,7 @@ INE5413 - Grafos}
     \frametitle{Resolução}
     \begin{itemize}
         \item Cada página deve transferir sua `importância' $\frac{1}{k}$ para
-        seus sucessores
+            seus sucessores
         \begin{itemize}
             \item $k =$ grau de emissão do vértice
             \item Processo de valoração de arestas
@@ -122,16 +125,16 @@ INE5413 - Grafos}
     \frametitle{Problemas}
     \begin{itemize}
         \item Se $k = 0$ para uma página qualquer,
-        então a página não afetaria outras, no modelo acima
+            então a página não afetaria outras, no modelo acima
         \begin{figure}
             \includegraphics[scale=0.35]{pr_2}
             \caption{\tiny{A página `4', um sumidouro, deve possibilitar a
-            navegação para o resto do grafo}}
+                navegação para o resto do grafo}}
         \end{figure}
         \item Se o grafo é desconexo, como mover entre componentes?
         \begin{itemize}
             \item Considerar que o `navegador' aleatório pode se cansar de
-            clicar e querer trocar de página de outro modo
+                clicar e querer trocar de página de outro modo
         \end{itemize}
         \item Adicionar um fator probabilístico que lida com estes cenários
     \end{itemize}
@@ -143,7 +146,7 @@ INE5413 - Grafos}
         \item Métrica para profundidade e extensão de \textit{web crawling}
         \item Funções mais importantes no kernel Linux
         \item Recomendação de seguidores no Twitter, produtos na Amazon e
-        filmes no Netflix
+            filmes no Netflix
         \item Impacto científico de pesquisadores e artigos
         \item Sistema de ranking entre times ou atletas em esportes
         \item Encontrar genes correlacionados de acordo com um certo critério
@@ -154,30 +157,9 @@ INE5413 - Grafos}
 
 \begin{frame}
     \frametitle{Referências}
-    \begin{thebibliography}{10}
-  \beamertemplatearticlebibitems
-  \bibitem{wills}
-    R.S.~Wills.
-    \newblock Google’s PageRank: The Math Behind the Search Engine
-    \newblock {\em The Matematical Intelligencer}, 28(4):6--10, 2006.
-  \beamertemplatearticlebibitems
-  \bibitem{page}
-    L.~Page, S.~Brin, R.~Motwani, T.~Winograd.
-    \newblock The PageRank Citation Ranking: Bringing Order to the Web.
-    \newblock {\em Stanford InfoLab}, 1999.
-  \beamertemplatearticlebibitems
-  \bibitem{gleich}
-    D.F.~Gleich.
-    \newblock PageRank beyond the Web
-    \newblock {\em SIAM Review}, 57(3):321--363, 2015.
-  \beamertemplateonlinebibitems
-  \bibitem{tanase}
-    R.~Tanase, R.~Radu.
-    \newblock PageRank Algorithm - The Mathematics of Google Search
-    \newblock
-    \href{http://www.math.cornell.edu/~mec/Winter2009/RalucaRemus/Lecture3/lecture3.html}
-    {Lecture 3}, 2009.
-  \end{thebibliography}
+    \nocite{*}
+    \bibliography{ine5413_t2}
+    \bibliographystyle{apalike}
 \end{frame}
 
 \end{document}
