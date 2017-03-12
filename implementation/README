@@ -1,4 +1,4 @@
-A simple di-graph implementation in Python that contains a depth-first search
+A simple digraph implementation in Python that contains a depth-first search
 algorithm, used to check if a graph is a tree. A document consisting of time
 complexities of all the methods is also included.
 
