@@ -3,3 +3,13 @@ algorithm, used to check if a graph is a tree. A document consisting of time
 complexities of all the methods is also included.
 
 Original assignment: 6e473558a8e3a312b4c83a8dfd38819dd9249086
+
+The doublets word transformation puzzle, created by Lewis Carroll (of Alice in
+Wonderland fame), can be modeled as a graph depth-first search. Its rules are
+simple: given two words with the same length, one must connect them through
+"links", which are simply one-letter changes that must produce valid words.
+
+A Python implementation using a heap queue is provided as a proof of concept.
+With a dictionary file in hands, one may use it as following:
+
+    $ python doublets.py /path/to/dict word1 word2
