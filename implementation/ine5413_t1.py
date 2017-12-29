@@ -1,6 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""ine5413.py
+
+A simple digraph implementation in Python that contains a depth-first search
+algorithm, used to check if a graph is a tree.
+"""
+
 import random
 
 
@@ -10,9 +16,9 @@ class Graph(object):
     are connected by links. The objects are called vertices, and the links are
     called edges.
     """
-    def __init__(self, vertices={}, directed=False):
+    def __init__(self, vertices=None, directed=False):
         """Initializes a graph object."""
-        self.vertices = vertices
+        self.vertices = vertices if vertices else dict()
         self.directed = directed
 
     def add_vertex(self, vertex):
@@ -23,9 +29,9 @@ class Graph(object):
     def remove_vertex(self, vertex):
         """Removes a vertex and every one of its edges from the graph."""
         if vertex in self.vertices:
-            for v in self.vertices:
-                if vertex in self.vertices[v]:
-                    self.vertices[v].remove(vertex)
+            for vtx in self.vertices:
+                if vertex in self.vertices[vtx]:
+                    self.vertices[vtx].remove(vertex)
             del self.vertices[vertex]
 
     def connect_two_vertices(self, vert1, vert2):
@@ -111,15 +117,15 @@ class Graph(object):
         return all(max_degree == self.get_vertex_degree(v)
                    for v in self.vertices) and self.graph_connectivity()
 
-    def transitive_closure(self, vertex, visited=set()):
+    def transitive_closure(self, vertex, visited=None):
         """
         A transitive closure represents the set of all the vertices reachable
         directly or indirectly from a given vertex.
         """
         visited.add(vertex)
-        for v in self.get_adjacent_vertices(vertex):
-            if v not in visited:
-                self.transitive_closure(v, visited)
+        for vtx in self.get_adjacent_vertices(vertex):
+            if vtx not in visited:
+                self.transitive_closure(vtx, visited)
         return visited
 
     def graph_connectivity(self):
@@ -132,7 +138,7 @@ class Graph(object):
         A graph is a tree iff all the vertices are reachable through the
         minimum number of edges possible (the order of the graph minus one).
         """
-        def check_cycles(v, act_v, before_v, visited=set()):
+        def check_cycles(vtx, act_v, before_v, visited=None):
             """
             A depth-first search algorithm (path searching in graphs where each
             branch is searched until its last child before backtracking)
@@ -142,9 +148,9 @@ class Graph(object):
                 return True
             visited.add(act_v)
             for adj in self.get_adjacent_vertices(act_v):
-                if adj != before_v and check_cycles(v, adj, act_v, visited):
-                        return True
+                if adj != before_v and check_cycles(vtx, adj, act_v, visited):
+                    return True
             return False
 
-        v = self.get_random_vertex()
-        return self.graph_connectivity() and not check_cycles(v, v, v)
+        vtx = self.get_random_vertex()
+        return self.graph_connectivity() and not check_cycles(vtx, vtx, vtx)
