@@ -7,15 +7,17 @@ A simple digraph implementation in Python that contains a depth-first search
 algorithm, used to check if a graph is a tree.
 """
 
-import random
+from __future__ import absolute_import
+from random import choice
 
 
-class Graph(object):
+class Graph:
     """
     A graph is a representation of a set of objects where some pairs of these
     are connected by links. The objects are called vertices, and the links are
     called edges.
     """
+
     def __init__(self, vertices=None, directed=False):
         """Initializes a graph object."""
         self.vertices = vertices if vertices else dict()
@@ -58,7 +60,7 @@ class Graph(object):
 
     def get_random_vertex(self):
         """Picks a random vertex from the available ones."""
-        return random.choice(list(self.vertices.keys()))
+        return choice(list(self.vertices.keys()))
 
     def get_vertex_predecessors(self, vertex):
         """
@@ -77,8 +79,9 @@ class Graph(object):
     def get_adjacent_vertices(self, vertex):
         """Counts all vertices that are connected to a given vertex."""
         if self.directed:
-            return (self.get_vertex_sucessors(vertex) |
-                    self.get_vertex_predecessors(vertex))
+            return self.get_vertex_sucessors(
+                vertex
+            ) | self.get_vertex_predecessors(vertex)
         return self.vertices[vertex]
 
     def get_vertex_indegree(self, vertex):
@@ -104,8 +107,9 @@ class Graph(object):
     def graph_regularity(self):
         """A graph is regular iff all of its vertices have the same degree."""
         rand_degree = self.get_vertex_degree(self.get_random_vertex())
-        return all(rand_degree == self.get_vertex_degree(v)
-                   for v in self.vertices)
+        return all(
+            rand_degree == self.get_vertex_degree(v) for v in self.vertices
+        )
 
     def graph_completeness(self):
         """
@@ -114,8 +118,10 @@ class Graph(object):
         It is also called a k_n graph, where n is the order of the graph.
         """
         max_degree = self.graph_order() - 1
-        return all(max_degree == self.get_vertex_degree(v)
-                   for v in self.vertices) and self.graph_connectivity()
+        return (
+            all(max_degree == self.get_vertex_degree(v) for v in self.vertices)
+            and self.graph_connectivity()
+        )
 
     def transitive_closure(self, vertex, visited=None):
         """
@@ -130,14 +136,16 @@ class Graph(object):
 
     def graph_connectivity(self):
         """A graph is connected iff there exists no unreachable vertices."""
-        return (set(self.vertices.keys()) ==
-                self.transitive_closure(self.get_random_vertex()))
+        return set(self.vertices.keys()) == self.transitive_closure(
+            self.get_random_vertex()
+        )
 
     def is_tree(self):
         """
         A graph is a tree iff all the vertices are reachable through the
         minimum number of edges possible (the order of the graph minus one).
         """
+
         def check_cycles(vtx, act_v, before_v, visited=None):
             """
             A depth-first search algorithm (path searching in graphs where each

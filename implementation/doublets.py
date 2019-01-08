@@ -14,6 +14,7 @@ solve the proposed problem, it suffices to use Dijkstra's algorithm to find
 one of the smallest paths between the two given nodes.
 """
 
+from __future__ import absolute_import
 from heapq import heappop, heappush
 from re import compile as recomp
 from sys import argv
@@ -31,6 +32,7 @@ def search(start, finish, words):
     Returns:
         A list of strings representing a path between `start` and `finish`.
     """
+
     def heuristic(word):
         """
         Metric that measures if two words are close enough.
@@ -86,11 +88,11 @@ def main():
     start, end = argv[2], argv[3]
     assert len(start) == len(end), "Length of words must be equal!"
 
-    regex = recomp(r'\b[a-z]{{{}}}\b'.format(str(len(end))))
+    regex = recomp(r"\b[a-z]{{{}}}\b".format(str(len(end))))
     words = set(regex.findall(open(argv[1]).read()))
 
     print(" -> ".join(search(start.lower(), end.lower(), words)))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
